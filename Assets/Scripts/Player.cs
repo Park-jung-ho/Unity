@@ -18,5 +18,6 @@ public class Player : MonoBehaviour
         float rad = Mathf.Deg2Rad * degrees;
         Vector3 pos = new Vector3(Mathf.Cos(rad) * radius, 0, Mathf.Sin(rad) * radius);
         transform.position = pos;
+        transform.LookAt(Vector3.zero);
     }
 }
