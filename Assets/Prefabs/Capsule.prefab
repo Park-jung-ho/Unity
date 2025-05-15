@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 7265883891504910205}
   - component: {fileID: 2183019370811186258}
   - component: {fileID: -129498048201473826}
-  m_Layer: 0
+  - component: {fileID: 8938324406187954313}
+  m_Layer: 3
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,3 +101,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17f4f748ca441674f97a3e588ec8f7d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &8938324406187954313
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2158910636525350769}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 2, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}

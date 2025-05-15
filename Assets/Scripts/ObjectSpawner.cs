@@ -12,6 +12,7 @@ public class ObjectSpawner : MonoBehaviour
     void Start()
     {
         spawnObjects = new GameObject[spawncount];
+        spawnButton();
     }
 
     public void spawnButton()
