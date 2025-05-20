@@ -12,6 +12,11 @@ public class BoardCheckBlock : MonoBehaviour
         renderer = GetComponent<MeshRenderer>();
     }
 
+    public void changeColor(int idx)
+    {
+        renderer.material.color = colors[idx];
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Block"))
