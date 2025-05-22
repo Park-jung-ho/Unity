@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace TetrisGame
@@ -30,14 +31,13 @@ public class Block : MonoBehaviour
     {
         rotIdx = 1;
         stopTime = spawner.stopTime;
-        rotLR(false);
+        rotLR(true);
     }
 
     void Update()
     {
         if (end)
         {
-            spawner.mappingNewBlock(childblocks);
             return;
         }
         
@@ -63,11 +63,17 @@ public class Block : MonoBehaviour
             if (stopTime <= 0)
             {
                 end = true;
-                timerOn = false;
                 break;
             }
             yield return null;
         }
+        timerOn = false;
+        if (checkNextMove(0, -1))
+        {
+            end = false;
+            yield break;
+        }
+        spawner.mappingNewBlock(childblocks);
     }
     bool checkMoveCoolTime()
     {
@@ -144,6 +150,7 @@ public class Block : MonoBehaviour
     void rotLR(bool left)
     {
         int idx = left == true ? -1 : 1;
+        int prevIdx = rotIdx;
         rotIdx += idx;
         if (rotIdx < 0)
         {
@@ -153,25 +160,49 @@ public class Block : MonoBehaviour
         {
             rotIdx = 0;
         }
-
-        string rotString = spawner.getRotationString(BlockID, rotIdx);
-        if (rotString != null)
+        
+        rot();
+        if (checkCanRot(prevIdx, rotIdx) == false)
         {
-            int cnt = 0;
-            for (int y = 0; y < 4; y++)
+            rotIdx = prevIdx;
+            rot();
+        }
+        
+    }
+
+    bool checkCanRot(int before, int after)
+    {
+        List<Vector2Int> data = spawner.getWallKicksData(before, after, BlockID == 0 ? true : false);
+        foreach (var offset in data)
+        {
+            if (checkNextMove(offset.x, offset.y))
             {
-                for (int x = 0; x < 4; x++)
+                transform.position += new Vector3(offset.x, offset.y);
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    void rot()
+    {
+        string rotString = spawner.getRotationString(BlockID, rotIdx);
+        if (rotString == null) return;
+        
+        int cnt = 0;
+        for (int y = 0; y < 4; y++)
+        {
+            for (int x = 0; x < 4; x++)
+            {
+                if (rotString[(y*4)+x] == '1')
                 {
-                    if (rotString[(y*4)+x] == '1')
-                    {
-                        childblocks[cnt].transform.localPosition = new Vector3(x, -y, 0);
-                        cnt++;
-                    }
+                    childblocks[cnt].transform.localPosition = new Vector3(x, -y, 0);
+                    cnt++;
                 }
             }
         }
     }
-    
 }
     
 }

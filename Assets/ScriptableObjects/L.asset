@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 349f2739fa2c53f47bd78ea437d2d6eb, type: 3}
-  m_Name: S
+  m_Name: L
   m_EditorClassIdentifier: 
   blockRot:
-  - 0110110000000000
-  - 1000110001000000
-  - 0110110000000000
-  - 1000110001000000
+  - 1000111000000000
+  - 0110010001000000
+  - 0000111000100000
+  - 0100010011000000

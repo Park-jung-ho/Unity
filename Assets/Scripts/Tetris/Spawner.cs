@@ -11,6 +11,7 @@ public class Spawner : MonoBehaviour
     public List<GameObject> blocks;
     [SerializeField] private List<int> randomList;
     public List<blockInfo> blockInfos;
+    public WallKickDataSO wallKickData;
     public Vector3 spawnPos;
     public Vector2 rowcol;
     public bool[,] maps;
@@ -74,6 +75,13 @@ public class Spawner : MonoBehaviour
             maps[x,y] = true;
             debugBlocks[x,y].GetComponent<BoardCheckBlock>().changeColor(1);
         }
+
+        checkClearLine();
+    }
+
+    void checkClearLine()
+    {
+        
     }
     void debugMapping()
     {
@@ -93,6 +101,29 @@ public class Spawner : MonoBehaviour
             return null;
         }
         return blockInfos[id].blockRot[idx];
+    }
+
+    public List<Vector2Int> getWallKicksData(int before, int after, bool isIBlock = false)
+    {
+        // [0 = 0, R = 1, 2 = 2 ,L = 3]
+        int idx = 0;
+        for (int i = 0; i < wallKickData.WallKicks_Keys.Count; i++)
+        {
+            if (wallKickData.WallKicks_Keys[i].x == before && wallKickData.WallKicks_Keys[i].y == after)
+            {
+                idx = i;
+                break;
+            }
+        }
+
+        if (isIBlock)
+        {
+            return wallKickData.I_WallKicks[idx].kicks;
+        }
+        else
+        {
+            return wallKickData.JLSZT_WallKicks[idx].kicks;
+        }
     }
     
     public void spawnNextBlock()
