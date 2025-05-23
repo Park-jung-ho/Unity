@@ -292,9 +292,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 682d6841d77c4fd4c8f957b1f55b688d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BlockID: 0
+  spawner: {fileID: 0}
   moveTime: 1
-  canMove: 1
+  end: 0
+  childblocks:
+  - {fileID: 9097541831591784215}
+  - {fileID: 6603596980957328365}
+  - {fileID: 1068596379280975348}
+  - {fileID: 1165863147834183851}
   currentPosition: {x: 0, y: 0, z: 0}
+  rotIdx: 0
+  stopTime: 0
 --- !u!1 &5997517781885308076
 GameObject:
   m_ObjectHideFlags: 0

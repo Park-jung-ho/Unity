@@ -79,14 +79,15 @@ MonoBehaviour:
   BlockID: 6
   spawner: {fileID: 0}
   moveTime: 1
-  canMove: 1
+  end: 0
   childblocks:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8221403335641547111}
+  - {fileID: 5994589745089842395}
+  - {fileID: 4331584324233639641}
+  - {fileID: 4538164579987499365}
   currentPosition: {x: 0, y: 0, z: 0}
   rotIdx: 0
+  stopTime: 0
 --- !u!1 &4563230830283711370
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,21 +2,26 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using TetrisGame;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace TetrisGame
 {
 public class Spawner : MonoBehaviour
 {
-    public List<GameObject> blocks;
+    public List<Block> blocks;
     [SerializeField] private List<int> randomList;
     public List<blockInfo> blockInfos;
     public WallKickDataSO wallKickData;
     public Vector3 spawnPos;
     public Vector2 rowcol;
-    public bool[,] maps;
     public float stopTime;
-    public GameObject debugBlock;
+    
+    public bool[,] maps;
+    public Transform visualBlockRoot;
+    public VisualBlock[,] visualBlocks;
+    
+    public VisualBlock visualBlock;
     public GameObject[,] debugBlocks;
 
     [SerializeField] private int rollIdx;
@@ -25,6 +30,7 @@ public class Spawner : MonoBehaviour
     {
         rollIdx = blocks.Count;
         maps = new bool[(int)rowcol.x, (int)rowcol.y];
+        visualBlocks = new VisualBlock[(int)rowcol.x, (int)rowcol.y];
         debugBlocks = new GameObject[(int)rowcol.x, (int)rowcol.y];
         for (int i = 0; i < blocks.Count; i++)
         {
@@ -34,19 +40,18 @@ public class Spawner : MonoBehaviour
 
     void Start()
     {
-        mappInit();
-        debugMapping();
+        mapInit();
+        visualMapping();
+        
+        Invoke(nameof(spawnNextBlock),1f);
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            spawnNextBlock();
-        }
+        
     }
 
-    void mappInit()
+    void mapInit()
     {
         for (int i = 0; i < rowcol.x; i++)
         {
@@ -67,32 +72,89 @@ public class Spawner : MonoBehaviour
 
     public void mappingNewBlock(Transform[] block)
     {
+        Debug.Log("MAPPING NEW BLOCK");
+        
+        Material mat = block[0].GetComponent<MeshRenderer>().material;
         foreach (var b in block)
         {
             int x = (int)b.position.x;
             int y = (int)b.position.y;
             if (x < 0 || x >= rowcol.x || y < 0 || y >= rowcol.y) continue;
             maps[x,y] = true;
-            debugBlocks[x,y].GetComponent<BoardCheckBlock>().changeColor(1);
+            visualBlocks[x,y].changeMat(mat);
+            visualBlocks[x,y].gameObject.SetActive(true);
         }
-
+        block[0].parent.gameObject.SetActive(false);
         checkClearLine();
     }
 
     void checkClearLine()
     {
+        // check List
+        int[] chk = new int[(int)rowcol.y];
+        // check clearLine
+        for (int j = 0; j < rowcol.y; j++)
+        {
+            bool clear = true;
+            for (int i = 0; i < rowcol.x; i++)
+            {
+                if (maps[i, j] == false)
+                {
+                    clear = false;
+                    break;
+                }
+            }
+            if (clear) chk[j] = 1;
+        }
+        // clear line
+        for (int j = 0; j < rowcol.y; j++)
+        {
+            if (chk[j] == 0) continue;
+            for (int i = 0; i < rowcol.x; i++)
+            {
+                maps[i,j] = false;
+                visualBlocks[i,j].gameObject.SetActive(false);
+            }
+        }
+        // movedown lines
+        int cnt = 0;
+        for (int j = 1; j < rowcol.y; j++)
+        {
+            cnt += chk[j-1];
+            for (int i = 0; i < rowcol.x; i++)
+            {
+                if (maps[i,j] == false) continue;
+                maps[i,j] = false;
+                visualBlocks[i,j].gameObject.SetActive(false);
+                maps[i,j-cnt] = true;
+                visualBlocks[i,j-cnt].changeMat(visualBlocks[i,j].renderer.material);
+                visualBlocks[i,j-cnt].gameObject.SetActive(true);
+            }
+        }
         
+        spawnNextBlock();
     }
-    void debugMapping()
+    void visualMapping()
     {
         for (int j = 0; j < rowcol.y; j++)
         {
             for (int i = 0; i < rowcol.x; i++)
             {
-                debugBlocks[i,j] = Instantiate(debugBlock, new Vector3(i-11,j,0), Quaternion.identity);
+                visualBlocks[i,j] = Instantiate(visualBlock, new Vector3(i,j,0), Quaternion.identity, visualBlockRoot);
+                visualBlocks[i,j].gameObject.SetActive(false);
             }
         }
     }
+    // void debugMapping()
+    // {
+    //     for (int j = 0; j < rowcol.y; j++)
+    //     {
+    //         for (int i = 0; i < rowcol.x; i++)
+    //         {
+    //             debugBlocks[i,j] = Instantiate(visualBlock, new Vector3(i-11,j,0), Quaternion.identity);
+    //         }
+    //     }
+    // }
 
     public string getRotationString(int id,int idx)
     {
@@ -130,9 +192,13 @@ public class Spawner : MonoBehaviour
     {
         int n = Random.Range(0, rollIdx);
         int idx = randomList[n];
-        GameObject newBlock = Instantiate(blocks[idx], spawnPos, Quaternion.identity);
-        Block newB = newBlock.GetComponent<Block>();
-        newB.spawner = this;
+        blocks[idx].transform.position = spawnPos;
+        blocks[idx].spawner = this;
+        blocks[idx].init();
+        blocks[idx].gameObject.SetActive(true);
+        
+        Debug.Log($"{blocks[idx].gameObject.name} Block Spawned");
+        
         randomList[n] = randomList[rollIdx-1];
         randomList[rollIdx - 1] = idx;
         rollIdx--;

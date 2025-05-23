@@ -11,7 +11,7 @@ public class Block : MonoBehaviour
     public Spawner spawner;
     public float moveTime;
     public bool end = false;
-    public Transform[] childblocks = new Transform[4];
+    public Transform[] childblocks;
     
     [SerializeField] private Vector3 currentPosition;
     [SerializeField] private int rotIdx;
@@ -19,19 +19,17 @@ public class Block : MonoBehaviour
     private float moveTimer;
     private bool timerOn;
 
-    private void Awake()
+    
+    public void init()
     {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            childblocks[i] = transform.GetChild(i);
-        }
+        rotIdx = 0;
+        stopTime = spawner.stopTime;
+        end = false;
+        rot();
     }
-
     void Start()
     {
-        rotIdx = 1;
-        stopTime = spawner.stopTime;
-        rotLR(true);
+        init();
     }
 
     void Update()

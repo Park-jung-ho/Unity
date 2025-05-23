@@ -405,10 +405,10 @@ MonoBehaviour:
   moveTime: 1
   end: 0
   childblocks:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 3159437404860817796}
+  - {fileID: 2101563122874876645}
+  - {fileID: 6758498481157161703}
+  - {fileID: 7795227828393295592}
   currentPosition: {x: 0, y: 0, z: 0}
   rotIdx: 0
   stopTime: 0

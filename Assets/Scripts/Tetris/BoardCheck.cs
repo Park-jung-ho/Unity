@@ -1,35 +1,22 @@
 using System;
 using UnityEngine;
 
-public class BoardCheckBlock : MonoBehaviour
+public class VisualBlock : MonoBehaviour
 {
     public Color[] colors;
-    
-    private MeshRenderer renderer;
+    public MeshRenderer renderer;
 
     private void Awake()
     {
-        renderer = GetComponent<MeshRenderer>();
     }
 
     public void changeColor(int idx)
     {
         renderer.material.color = colors[idx];
     }
-
-    private void OnTriggerEnter(Collider other)
+    public void changeMat(Material mat)
     {
-        if (other.CompareTag("Block"))
-        {
-            renderer.material.color = colors[1];
-        }
+        renderer.material = mat;
     }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Block"))
-        {
-            renderer.material.color = colors[0];
-        }
-    }
+    
 }
