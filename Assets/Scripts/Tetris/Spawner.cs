@@ -22,6 +22,7 @@ public class Spawner : MonoBehaviour
     public VisualBlock[,] visualBlocks;
     
     public VisualBlock visualBlock;
+    public GameObject DropPointBlock;
     public GameObject[,] debugBlocks;
 
     [SerializeField] private int rollIdx;

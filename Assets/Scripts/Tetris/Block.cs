@@ -5,11 +5,22 @@ using UnityEngine;
 
 namespace TetrisGame
 {
+enum InputKey
+{
+    moveL,
+    moveR,
+    rotL,
+    rotR,
+    moveDown,
+}
 public class Block : MonoBehaviour
 {
     public int BlockID;
     public Spawner spawner;
-    public float moveTime;
+    public GameObject dropPointBlock;
+    [SerializeField] private float initialDelay = 0.3f;
+    [SerializeField] private float repeatRate = 0.1f;
+    [SerializeField] private float moveTime;
     public bool end = false;
     public Transform[] childblocks;
     
@@ -18,13 +29,23 @@ public class Block : MonoBehaviour
     [SerializeField] private float stopTime;
     private float moveTimer;
     private bool timerOn;
+    [SerializeField] private bool[] isPressed; // { moveL, moveR, rotL, rotR, moveDown }
+    [SerializeField] private bool[] isPressedEndDelay; // { moveL, moveR, rotL, rotR, moveDown }
+    [SerializeField] private float[] keyTimer; // { moveL, moveR, rotL, rotR, moveDown }
+    [SerializeField] private KeyCode[] keys; // { moveL, moveR, rotL, rotR, moveDown }
 
     
     public void init()
     {
+        isPressed = new bool[5] { false, false, false, false, false };
+        isPressedEndDelay = new bool[5] { false, false, false, false, false };
+        keyTimer = new float[5] { 0f, 0f, 0f, 0f, 0f };
+        keys = new KeyCode[5] { KeyCode.A ,KeyCode.D ,KeyCode.Q ,KeyCode.E ,KeyCode.S };
         rotIdx = 0;
         stopTime = spawner.stopTime;
         end = false;
+        dropPointBlock = spawner.DropPointBlock;
+        dropPointBlock.SetActive(true);
         rot();
     }
     void Start()
@@ -38,21 +59,62 @@ public class Block : MonoBehaviour
         {
             return;
         }
+
+        checkInput();
         
-        if (Input.GetKeyDown(KeyCode.A)) moveLR(true);
-        if (Input.GetKeyDown(KeyCode.D)) moveLR(false);
-        if (Input.GetKeyDown(KeyCode.Q)) rotLR(true);
-        if (Input.GetKeyDown(KeyCode.E)) rotLR(false);
-        if (Input.GetKeyDown(KeyCode.S)) moveDown();
+        if (IsPressedEndDelay(InputKey.moveL)) moveLR(true);
+        if (IsPressedEndDelay(InputKey.moveR)) moveLR(false);
+        if (IsPressedEndDelay(InputKey.rotL)) rotLR(true);
+        if (IsPressedEndDelay(InputKey.rotR)) rotLR(false);
+        if (IsPressedEndDelay(InputKey.moveDown)) moveDown(true);
         if (Input.GetKeyDown(KeyCode.Space)) speedDown();
-        if (checkMoveCoolTime())
-        {
-            moveDown();
-        }
+
+        moveDown(false);
+        
+
+        showDropPoint();
     }
 
+    bool IsPressedEndDelay(InputKey key)
+    {
+        return isPressedEndDelay[(int)key];
+    }
+
+    void checkInput()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            isPressedEndDelay[i] = false;
+            if (Input.GetKey(keys[i]))
+            {
+                if (!isPressed[i])
+                {
+                    isPressed[i] = true;
+                    isPressedEndDelay[i] = true;
+                    keyTimer[i] = initialDelay;
+                }
+                else
+                {
+                    keyTimer[i] -= Time.deltaTime;
+                    if (keyTimer[i] <= 0f)
+                    {
+                        isPressedEndDelay[i] = true;
+                        keyTimer[i] = repeatRate;
+                    }
+                }
+            }
+            else
+            {
+                isPressed[i] = false;
+                keyTimer[i] = 0f;
+            }
+        }
+        
+    }
+    
     IEnumerator stopTimer()
     {
+        dropPointBlock.SetActive(false);
         timerOn = true;
         stopTime = spawner.stopTime;
         while (true)
@@ -69,6 +131,7 @@ public class Block : MonoBehaviour
         if (checkNextMove(0, -1))
         {
             end = false;
+            dropPointBlock.SetActive(true);
             yield break;
         }
         spawner.mappingNewBlock(childblocks);
@@ -99,26 +162,57 @@ public class Block : MonoBehaviour
         return true;
     }
 
+    void showDropPoint()
+    {
+        dropPointBlock.transform.position = transform.position;
+        bool canMove = true;
+        while (true)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                int x = (int)dropPointBlock.transform.GetChild(i).position.x;
+                int y = (int)dropPointBlock.transform.GetChild(i).position.y - 1;
+                
+                if (spawner.canMove(x,y) == false)
+                {
+                    canMove = false;
+                    break;
+                }
+            }
+
+            if (canMove == false)
+            {
+                break;
+            }
+            
+            dropPointBlock.transform.position += Vector3.down;
+        }
+    }
     void speedDown()
     {
         while (!timerOn)
         {
-            moveDown();
+            moveDown(true);
         }
 
         stopTime = 0;
     }
-    void moveDown()
+    void moveDown(bool isSoftDrop)
     {
         if (checkNextMove(0, -1) == false)
         {
-            if (timerOn) stopTime = spawner.stopTime;
-            else StartCoroutine(stopTimer());
+            if (!timerOn) StartCoroutine(stopTimer());
             
             return;
         }
 
-        StopAllCoroutines();
+        if (!isSoftDrop && checkMoveCoolTime() == false) return;
+
+        if (timerOn)
+        {
+            StopAllCoroutines();
+            timerOn = false;
+        }
         
         currentPosition = transform.position;
         currentPosition.y -= 1;
@@ -196,6 +290,7 @@ public class Block : MonoBehaviour
                 if (rotString[(y*4)+x] == '1')
                 {
                     childblocks[cnt].transform.localPosition = new Vector3(x, -y, 0);
+                    dropPointBlock.transform.GetChild(cnt).localPosition = new Vector3(x, -y, 0);
                     cnt++;
                 }
             }
