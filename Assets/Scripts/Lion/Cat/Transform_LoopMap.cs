@@ -14,7 +14,8 @@ public class Transform_LoopMap : MonoBehaviour
             loopObject.position += Vector3.left * moveSpeed * Time.fixedDeltaTime;
             if (loopObject.position.x <= minPosition)
             {
-                loopObject.position = new Vector2(maxPosition, loopObject.position.y);
+                float randomY = Random.Range(-5, 0);
+                loopObject.position = new Vector2(maxPosition, randomY);
             }
         }
     }
