@@ -15,8 +15,11 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        transform.localPosition += Vector3.forward * moveSpeed * Time.deltaTime;
-        transform.localRotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y + rotSpeed * Time.deltaTime, 0);
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        Vector3 movement = new Vector3(horizontal, 0, vertical);
+        transform.position += movement * moveSpeed * Time.deltaTime;
+        if (movement != Vector3.zero) transform.rotation = Quaternion.LookRotation(movement);
     }
 }
 
