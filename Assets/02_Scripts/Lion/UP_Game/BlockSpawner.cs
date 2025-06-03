@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace UP_Game
@@ -8,6 +9,7 @@ public class BlockSpawner : MonoBehaviour
     public GameObject blockPrefab;
     public Transform root;
     public Transform player;
+    public TMP_Text scoreText;
     public float YPosition;
     public float XPosition;
     [SerializeField] private Vector2 lastPos;
@@ -21,6 +23,7 @@ public class BlockSpawner : MonoBehaviour
 
     void Update()
     {
+        scoreText.text = player.GetComponent<CharacterController>().count.ToString();
         if (lastPos.y - player.position.y <= 30)
         {
             spawnCount = 30;

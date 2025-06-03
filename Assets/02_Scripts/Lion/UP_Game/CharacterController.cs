@@ -11,8 +11,8 @@ public class CharacterController : MonoBehaviour
     public SpriteRenderer[] renderers;
     public Vector2 upPos;
     public float cool;
+    public int count;
     private bool isGround;
-    private int count;
     private bool isDead;
 
     void init()
