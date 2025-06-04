@@ -1,21 +1,37 @@
 using UnityEngine;
 
-public class Transform_LoopMap : MonoBehaviour
+namespace CatGame
 {
-    public Transform[] LoopObjects;
-    public float moveSpeed;
-    public float minPosition;
-    public float maxPosition;
 
-    void Update()
+
+    public class Transform_LoopMap : MonoBehaviour
     {
-        foreach (Transform loopObject in LoopObjects)
+        public Transform[] LoopObjects;
+        public float moveSpeed;
+        public float minPosition;
+        public float maxPosition;
+
+        public void init()
         {
-            loopObject.position += Vector3.left * moveSpeed * Time.fixedDeltaTime;
-            if (loopObject.position.x <= minPosition)
+            float lastX = 0f;
+            foreach (Transform loopObject in LoopObjects)
             {
-                float randomY = Random.Range(-5, 0);
-                loopObject.position = new Vector2(maxPosition, randomY);
+                float randomY = Random.Range(-5f, 0f);
+                loopObject.position = new Vector2(lastX + maxPosition, randomY);
+                lastX = loopObject.position.x;
+            }
+        }
+
+        void Update()
+        {
+            foreach (Transform loopObject in LoopObjects)
+            {
+                loopObject.position += Vector3.left * moveSpeed * Time.fixedDeltaTime;
+                if (loopObject.position.x <= minPosition)
+                {
+                    float randomY = Random.Range(-5, 0);
+                    loopObject.position = new Vector2(maxPosition, randomY);
+                }
             }
         }
     }
