@@ -31,10 +31,21 @@ public class GameManager : MonoBehaviour
         
     }
 
+    public void StartGame()
+    {
+        GameOverUI.SetActive(false);
+        PlayScene.SetActive(true);
+        spawner.init();
+        
+        foreach (var ui in IntroUI)
+        {
+            ui.SetActive(false);
+        }
+    }
     public void GameOver()
     {
         GameOverUI.SetActive(true);
-        Invoke(nameof(init), 1f);
+        Invoke(nameof(init), 2f);
     }
 }
 }

@@ -3,12 +3,18 @@ using UnityEngine;
 
 public class DoorTrigger : MonoBehaviour
 {
+    public GameObject DoorLock;
     public Animator animator;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            animator.SetTrigger("Open");
+            if (DoorLock != null)
+            {
+                DoorLock.SetActive(true);
+                DoorLock.transform.parent.GetComponent<NumberKeyPad>().doorAnim = animator;
+            }
+            // animator.SetTrigger("Open");
         }
     }
 

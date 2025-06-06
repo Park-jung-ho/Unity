@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace CatGame
 {
@@ -10,7 +12,7 @@ namespace CatGame
         public float moveSpeed;
         public float minPosition;
         public float maxPosition;
-
+        private float lastXPosition;
         public void init()
         {
             float lastX = 0f;
@@ -22,6 +24,8 @@ namespace CatGame
             }
         }
 
+        
+
         void Update()
         {
             foreach (Transform loopObject in LoopObjects)
@@ -30,8 +34,9 @@ namespace CatGame
                 if (loopObject.position.x <= minPosition)
                 {
                     float randomY = Random.Range(-5, 0);
-                    loopObject.position = new Vector2(maxPosition, randomY);
+                    loopObject.position = new Vector2(lastXPosition+maxPosition, randomY);
                 }
+                lastXPosition = loopObject.position.x;
             }
         }
     }
