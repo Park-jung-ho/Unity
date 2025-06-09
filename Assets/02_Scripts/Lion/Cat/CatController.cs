@@ -28,12 +28,17 @@ namespace CatGame
             if (Input.GetKeyDown(KeyCode.Space) && jumpCount > 0)
             {
                 jumpCount--;
-                rb.linearVelocityY = 0f;
                 rb.AddForceY(jumpforce, ForceMode2D.Impulse);
+                if (rb.linearVelocityY > jumpforce + 2f) rb.linearVelocityY = jumpforce + 2f;
                 animator.SetBool("ground", false);
                 animator.SetTrigger("jump");
                 soundManager.OnJumpSound();
             }
+            
+            Debug.Log(rb.linearVelocityY);
+            var catRotation = transform.eulerAngles;
+            catRotation.z = rb.linearVelocityY * 2.5f;
+            transform.eulerAngles = catRotation;
         }
 
         void gameover()
