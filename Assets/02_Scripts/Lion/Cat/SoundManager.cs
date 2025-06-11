@@ -5,9 +5,16 @@ namespace CatGame
 {
     public class SoundManager : MonoBehaviour
     {
+        public enum clipType
+        {
+            BGMcClip,
+            jumpcClip,
+            getcClip,
+        }
         public AudioSource audiosource;
         public AudioClip BGMcClip;
         public AudioClip jumpcClip;
+        public AudioClip getcClip;
 
         private void Start()
         {
@@ -22,9 +29,20 @@ namespace CatGame
             audiosource.Play();
         }
 
-        public void OnJumpSound()
+        public void PlayClip(clipType type)
         {
-            audiosource.PlayOneShot(jumpcClip);
+            switch (type)
+            {
+                case clipType.BGMcClip:
+                    audiosource.PlayOneShot(BGMcClip);
+                    break;
+                case clipType.jumpcClip:
+                    audiosource.PlayOneShot(jumpcClip);
+                    break;
+                case clipType.getcClip:
+                    audiosource.PlayOneShot(getcClip);
+                    break;
+            }
         }
     }
 

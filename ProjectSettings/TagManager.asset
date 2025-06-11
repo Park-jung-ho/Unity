@@ -10,6 +10,8 @@ TagManager:
   - score30
   - score50
   - gameover
+  - apple
+  - pipe
   layers:
   - Default
   - TransparentFX
