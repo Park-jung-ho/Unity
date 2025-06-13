@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
         {
             ui.SetActive(true);
         }
+        
         foreach (var ui in IntroUI)
         {
             ui.SetActive(false);
