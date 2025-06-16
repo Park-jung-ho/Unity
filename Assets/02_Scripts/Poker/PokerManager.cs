@@ -10,11 +10,15 @@ public class PokerManager : MonoBehaviour
     [Header("Poker Managers")]
     public RandomGenerator randomGenerator;
     public HandCheck handChecker;
+    public UIManager uiManager;
     
     public pokerCardData[] Deck;
-    
-    public List<Card> playerHand;
+
+    public List<Card> TopHand;
+    public HandRank TopRank;
+    public List<int> playerScores;
     public Card card;
+    public int handOpenCount;
 
     private void Awake()
     {
@@ -30,28 +34,34 @@ public class PokerManager : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(deckCoroutine());
-    }
-    
-    void Update()
-    {
         
     }
 
     public void CheckPlayerHand()
     {
-        handChecker.CheckHand(playerHand);
+        
     }
 
-    IEnumerator deckCoroutine()
+    IEnumerator ChangeTopHand(List<Card> cards)
     {
-        while (true)
+        if (TopHand[0].isFront)
         {
-            foreach (var c in Deck)
+            foreach (var card in TopHand)
             {
-                card.frontSprite = c.frontSprite;
-                yield return new WaitForSeconds(2f);
+                card.Flip();
+                yield return new WaitForSeconds(0.05f);
             }
+        }
+        
+        for (int i = 0; i < cards.Count; i++)
+        {
+            TopHand[i].cardData = cards[i].cardData;
+        }
+        yield return new WaitForSeconds(0.25f);
+        foreach (var card in TopHand)
+        {
+            card.Flip();
+            yield return new WaitForSeconds(0.05f);
         }
     }
 }

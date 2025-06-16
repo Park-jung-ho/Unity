@@ -13,7 +13,8 @@ namespace Poker
         public CardSuit Suit => cardData.suit;
         public CardRank Rank => cardData.rank;
         public Sprite CardFront => cardData.frontSprite;
-        
+
+        public bool isFront;
         private Animator anim;
         private SpriteRenderer sr;
 
@@ -25,9 +26,9 @@ namespace Poker
 
         public void TextureChange(int value)
         {
-            bool isFront = value == 0 ? true : false;
+            isFront = value == 0 ? true : false;
             
-            sr.sprite = isFront ? frontSprite : backSprite;
+            sr.sprite = isFront ? CardFront : backSprite;
         }
         
         public void Flip()

@@ -15,38 +15,29 @@ namespace Poker
             }
 
             var sortedHand = hand.OrderBy(c => (int)c.Rank).ToList();
+
+            bool isFlush = IsFlush(sortedHand);
+            bool isStraight = IsStraight(sortedHand);
             
-            if (IsFlush(sortedHand)) return HandRank.Flush;
-            if (IsStraight(sortedHand)) return HandRank.Straight;
+            if (isFlush && isStraight && sortedHand[0].Rank == CardRank.Ten) return HandRank.RoyalFlush;
+            if (isFlush && isStraight) return HandRank.StraightFlush;
+            if (IsFourofAKind(sortedHand)) return HandRank.FourOfAKind;
+            if (IsFullHouse(sortedHand)) return HandRank.FullHouse;
+            if (isFlush) return HandRank.Flush;
+            if (isStraight) return HandRank.Straight;
+            if (IsThreeOfAKind(sortedHand)) return HandRank.ThreeOfAKind;
+            if (IsTwoPair(sortedHand)) return HandRank.TwoPair;
+            if (IsOnePair(sortedHand)) return HandRank.OnePair;
             
             return HandRank.HighCard;
         }
-        // Straight flush  : Five cards of the same suit in sequence (if those five are A, K, Q, J, 10; it is a Royal Flush)
-        // Four of a kind  : Four cards of the same rank and any one other card
-        // Full house      : Three cards of one rank and two of another
-        // Flush           : Five cards of the same suit
-        // Straight        : Five cards in sequence (for example, 4, 5, 6, 7, 8)
-        // Three of a kind : Three cards of the same rank
-        // Two pair        : Two cards of one rank and two cards of another
-        // One pair        : Two cards of the same rank
-        // High card       : If no one has a pair, the highest card wins
         
-        /// <summary>
-        /// Flush           : Five cards of the same suit
-        /// </summary>
-        /// <param name="hand"></param>
-        /// <returns></returns>
         bool IsFlush(List<Card> hand)
         {
             CardSuit suit = hand.First().Suit;
             return hand.All(c => c.Suit == suit);
         }
         
-        /// <summary>
-        /// Straight        : Five cards in sequence (for example, 4, 5, 6, 7, 8)
-        /// </summary>
-        /// <param name="hand"></param>
-        /// <returns></returns>
         bool IsStraight(List<Card> hand)
         {
             // Back Straight!!
@@ -59,15 +50,46 @@ namespace Poker
                 return true;
             }
             
-            for (int i = 0; i < hand.Count; i++)
+            for (int i = 1; i < hand.Count; i++)
             {
-                if (hand[i].Rank == hand[i-1].Rank + 1)
+                if (hand[i].Rank != hand[i-1].Rank + 1)
                 {
                     return false;
                 }
             }
             
             return true;
+        }
+
+        bool IsFourofAKind(List<Card> hand)
+        {
+            var groups = hand.GroupBy(c => c.Rank).ToList();
+            return groups.Any(g => g.Count() == 4);
+        }
+
+        bool IsFullHouse(List<Card> hand)
+        {
+            var groups = hand.GroupBy(c => c.Rank).ToList();
+            return groups.Count == 2 &&
+                   groups.Any(g => g.Count() == 3) &&
+                   groups.Any(g => g.Count() == 2);
+        }
+
+        bool IsThreeOfAKind(List<Card> hand)
+        {
+            var groups = hand.GroupBy(c => c.Rank).ToList();
+            return groups.Any(g => g.Count() == 3);
+        }
+        bool IsTwoPair(List<Card> hand)
+        {
+            var groups = hand.GroupBy(c => c.Rank).ToList();
+            return groups.Count(g => g.Count() == 2) == 2;
+        }
+
+        bool IsOnePair(List<Card> hand)
+        {
+            var groups = hand.GroupBy(c => c.Rank).ToList();
+            return groups.Count(g => g.Count() == 2) == 1;
         }
     }
 
