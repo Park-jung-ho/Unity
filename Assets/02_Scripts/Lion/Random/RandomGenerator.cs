@@ -55,13 +55,14 @@ namespace Poker
                 }
                 HandRank currentRank = PokerManager.instance.handChecker.CheckHand(myCards);
                 PokerManager.instance.playerScores[(int)currentRank] += 1;
+                PokerManager.instance.handOpenCount++;
                 PokerManager.instance.uiManager.updateScores(currentRank);
+                PokerManager.instance.uiManager.UpdateOpenHandUI();
                 if (currentRank >= PokerManager.instance.TopRank)
                 {
                     PokerManager.instance.TopRank = currentRank;
                     PokerManager.instance.StartCoroutine("ChangeTopHand",myCards);
                 }
-                PokerManager.instance.handOpenCount++;
                 Debug.Log(currentRank);
                 yield return new WaitForSeconds(1f);
                 

@@ -9,7 +9,8 @@ namespace Poker
         public TMP_Text[] scores;
         public TMP_Text playTime;
         public TMP_Text OpenHand;
-        private float playtime;
+        private double playtime;
+        private float UIUpdateTimer;
         private int RankLength;
         
         private void Start()
@@ -19,18 +20,25 @@ namespace Poker
             {
                 scores[RankLength - (int)rank].text = $"{rank} : {0}";
             }
+
+            UpdateOpenHandUI();
         }
 
         private void Update()
         {
             playtime += Time.deltaTime;
-            int hours = Mathf.FloorToInt(playtime / 3600);
-            int minutes = Mathf.FloorToInt((playtime % 3600) / 60);
-            int seconds = Mathf.FloorToInt(playtime % 60);
-
-            string formattedTime = string.Format("{0:D2}:{1:D2}:{2:D2}", hours, minutes, seconds);
+            UIUpdateTimer += Time.deltaTime;
+            if (UIUpdateTimer >= 1.0f)
+            {
+                UIUpdateTimer -= 1.0f;
+                TimeSpan timeSpan = TimeSpan.FromSeconds(playtime);
+                playTime.text = timeSpan.ToString(@"hh\:mm\:ss");
+            }
             
-            playTime.text = formattedTime;
+        }
+
+        public void UpdateOpenHandUI()
+        { 
             OpenHand.text = string.Format("Open : {0}", PokerManager.instance.handOpenCount.ToString());
         }
 

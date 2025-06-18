@@ -12,6 +12,7 @@ TagManager:
   - gameover
   - apple
   - pipe
+  - Bullet
   layers:
   - Default
   - TransparentFX

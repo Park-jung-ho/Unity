@@ -25,7 +25,15 @@ public class Gun : MonoBehaviour, IDropItem
     IEnumerator bulletCoroutine(GameObject bulletClone)
     {
         bulletClone.SetActive(true);
-        bulletClone.GetComponent<Rigidbody>().AddForce(shotPos.forward * speed, ForceMode.Impulse);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Plane plane = new Plane(Vector3.up, Vector3.up);
+        Vector3 direction = Vector3.zero;
+        if (plane.Raycast(ray, out float distance))
+        {
+            direction = ray.GetPoint(distance) - transform.position;
+        }
+        direction.Normalize();
+        bulletClone.GetComponent<Rigidbody>().AddForce(direction * speed, ForceMode.Impulse);
         float coolTime = duration;
         while (coolTime > 0f)
         {
