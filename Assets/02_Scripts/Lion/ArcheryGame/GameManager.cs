@@ -46,7 +46,7 @@ namespace ArcheryGame
                 StopGame();
                 timer = 0;
             }
-            TimerText.text = string.Format("남은 시간 : {0} 초", timer.ToString("F2"));
+            TimerText.text = string.Format("Time Left : {0}", timer.ToString("F2"));
         }
 
         public void getScore()

@@ -766,7 +766,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Score : 7777'
+  m_text: 'Score : 0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 24f070e67a85a3047976bda4bbd84ec1, type: 2}
   m_sharedMaterial: {fileID: 5766182838265987564, guid: 24f070e67a85a3047976bda4bbd84ec1, type: 2}
@@ -957,7 +957,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB0A8\uC740 \uC2DC\uAC04 : 60 \uCD08"
+  m_text: 'Time Left : 0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 24f070e67a85a3047976bda4bbd84ec1, type: 2}
   m_sharedMaterial: {fileID: 5766182838265987564, guid: 24f070e67a85a3047976bda4bbd84ec1, type: 2}
@@ -984,7 +984,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 35.25
+  m_fontSize: 46.15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
