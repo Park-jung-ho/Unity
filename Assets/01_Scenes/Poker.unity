@@ -3212,7 +3212,6 @@ MonoBehaviour:
   - {fileID: 578271395}
   TopRank: 0
   playerScores: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
-  card: {fileID: 1873933430}
   handOpenCount: 0
 --- !u!4 &1818830042
 Transform:
@@ -3547,17 +3546,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2635118096993951444, guid: 3ca684c1b16e94e4abfe5b2eb440e16b, type: 3}
   m_PrefabInstance: {fileID: 1863332137}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1873933430 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6240288046220430480, guid: 3ca684c1b16e94e4abfe5b2eb440e16b, type: 3}
-  m_PrefabInstance: {fileID: 2741100232386097645}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2bc58f5086385247a513f41031bbd56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1898318502
 GameObject:
   m_ObjectHideFlags: 0

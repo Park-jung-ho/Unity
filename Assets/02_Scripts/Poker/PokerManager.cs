@@ -17,7 +17,7 @@ public class PokerManager : MonoBehaviour
     public List<Card> TopHand;
     public HandRank TopRank;
     public List<int> playerScores;
-    public Card card;
+    // public Card card;
     public int handOpenCount;
 
     private void Awake()
@@ -34,13 +34,15 @@ public class PokerManager : MonoBehaviour
 
     void Start()
     {
-        
+        Application.targetFrameRate = 30;
+        Application.runInBackground = true;
+        QualitySettings.vSyncCount = 0;
     }
-
-    public void CheckPlayerHand()
-    {
-        
-    }
+    //
+    // public void CheckPlayerHand()
+    // {
+    //     
+    // }
 
     IEnumerator ChangeTopHand(List<Card> cards)
     {

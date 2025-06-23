@@ -11,10 +11,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/01_Scenes/Study/Cat.unity
     guid: 6f10974da0d570844bdcfc988ea8faf0
-  - enabled: 0
+  - enabled: 1
     path: Assets/01_Scenes/Poker.unity
     guid: 8e5c3d1719efaa541a4d44cc4562db3c
-  - enabled: 1
+  - enabled: 0
     path: Assets/01_Scenes/Study/Interface.unity
     guid: a3ca232a4cd1cc84297761b2fcc61dcb
   m_configObjects:
