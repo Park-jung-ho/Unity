@@ -7,12 +7,21 @@ public class KnightController_Keyboard : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
     
+    [SerializeField] private JoystickController joystickController;
+    [SerializeField] private InputType inputType;
     [SerializeField] private Vector3 inputDirection;
     [SerializeField] private float movementSpeed;
     [SerializeField] private float jumpForce;
     [SerializeField] private int maxJumpCount;
     [SerializeField] private int jumpCount;
     [SerializeField] private float groundCheckDistance;
+    
+    
+    private bool isGrounded;
+    [SerializeField] private bool isAttacking;
+    [SerializeField] private bool isCombo;
+    
+    
     void Awake()
     {
         animator = GetComponent<Animator>();
@@ -20,10 +29,17 @@ public class KnightController_Keyboard : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    void Start()
+    {
+        joystickController.jumpButton.onClick.AddListener(Jump);
+        joystickController.attackButton.onClick.AddListener(Attack);
+    }
+
     void Update()
     {
-        InputKeyboard();
+        GetInput();
         IsGrounded();
+        setAnimation();
     }
 
     void FixedUpdate()
@@ -31,6 +47,32 @@ public class KnightController_Keyboard : MonoBehaviour
         Move();
     }
 
+    void GetInput()
+    {
+        switch (inputType)
+        {
+            case InputType.keyboard:
+                InputKeyboard();
+                break;
+            case InputType.joystick:
+                InputJoystick();
+                break;
+        }
+    }
+    void InputJoystick()
+    {
+        inputDirection = joystickController.direction;
+        if (inputDirection.x < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+
+        if (inputDirection.x > 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        
+    }
     void InputKeyboard()
     {
         float horizontal = Input.GetAxis("Horizontal");
@@ -53,7 +95,6 @@ public class KnightController_Keyboard : MonoBehaviour
             inputDirection = Vector3.zero;
         }
         
-        animator.SetBool("Run", inputDirection.x != 0);
         
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -65,18 +106,25 @@ public class KnightController_Keyboard : MonoBehaviour
         }
     }
 
+    void setAnimation()
+    {
+        animator.SetFloat("JoystickX", inputDirection.x);
+        animator.SetFloat("JoystickY", inputDirection.y);
+        // animator.SetBool("Run", inputDirection.x != 0);
+        animator.SetBool("IsGround",isGrounded);
+    }
     void IsGrounded()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.down, groundCheckDistance);
         Debug.DrawRay(transform.position, Vector3.down * groundCheckDistance, Color.red);
         if (hit.collider != null && hit.collider.CompareTag("Ground"))
         {
-            if (animator.GetBool("IsGround") == false) Debug.Log($"[Ray] IsGround: {Time.time}");
-            animator.SetBool("IsGround",true);
+            if (!isGrounded) Debug.Log($"[Ray] IsGround: {Time.time}");
+            isGrounded = true;
         }
         else
         {
-            animator.SetBool("IsGround", false);
+            isGrounded = false;
         }
     }
     void Move()
@@ -95,9 +143,30 @@ public class KnightController_Keyboard : MonoBehaviour
 
     void Attack()
     {
-        animator.SetTrigger("Attack");
+        if (!isAttacking)
+        {
+            animator.SetTrigger("Attack");
+            isAttacking = true;
+        }
+        else
+        {
+            isCombo = true;
+        }
     }
 
+    public void CheckCombo()
+    {
+        if (isCombo)
+        {
+            animator.SetTrigger("Combo");
+            isCombo = false;
+        }
+    }
+    public void EndCombo()
+    {
+        isCombo = false;
+        isAttacking = false;
+    }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -116,4 +185,10 @@ public class KnightController_Keyboard : MonoBehaviour
             // animator.SetBool("IsGround",false);
         }
     }
+}
+
+public enum InputType
+{
+    keyboard,
+    joystick,
 }
