@@ -13,6 +13,7 @@ TagManager:
   - apple
   - pipe
   - Bullet
+  - Monster
   layers:
   - Default
   - TransparentFX

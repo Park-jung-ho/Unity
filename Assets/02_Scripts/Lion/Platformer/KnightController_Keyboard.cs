@@ -15,7 +15,7 @@ public class KnightController_Keyboard : MonoBehaviour
     [SerializeField] private int maxJumpCount;
     [SerializeField] private int jumpCount;
     [SerializeField] private float groundCheckDistance;
-    
+    [SerializeField] private float attackDamage; 
     
     private bool isGrounded;
     [SerializeField] private bool isAttacking;
@@ -75,8 +75,8 @@ public class KnightController_Keyboard : MonoBehaviour
     }
     void InputKeyboard()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
         if (horizontal < 0)
         {
             transform.localScale = new Vector3(-1, 1, 1);
@@ -116,10 +116,10 @@ public class KnightController_Keyboard : MonoBehaviour
     void IsGrounded()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.down, groundCheckDistance);
-        Debug.DrawRay(transform.position, Vector3.down * groundCheckDistance, Color.red);
+        // Debug.DrawRay(transform.position, Vector3.down * groundCheckDistance, Color.red);
         if (hit.collider != null && hit.collider.CompareTag("Ground"))
         {
-            if (!isGrounded) Debug.Log($"[Ray] IsGround: {Time.time}");
+            // if (!isGrounded) Debug.Log($"[Ray] IsGround: {Time.time}");
             isGrounded = true;
         }
         else
@@ -145,6 +145,7 @@ public class KnightController_Keyboard : MonoBehaviour
     {
         if (!isAttacking)
         {
+            attackDamage = 3f;
             animator.SetTrigger("Attack");
             isAttacking = true;
         }
@@ -158,6 +159,7 @@ public class KnightController_Keyboard : MonoBehaviour
     {
         if (isCombo)
         {
+            attackDamage = 5f;
             animator.SetTrigger("Combo");
             isCombo = false;
         }
@@ -173,7 +175,7 @@ public class KnightController_Keyboard : MonoBehaviour
         if (other.gameObject.CompareTag("Ground"))
         {
             // animator.SetBool("IsGround",true);
-            Debug.Log($"[Collision] IsGround: {Time.time}");
+            // Debug.Log($"[Collision] IsGround: {Time.time}");
             jumpCount = maxJumpCount;
         }
     }
@@ -183,6 +185,15 @@ public class KnightController_Keyboard : MonoBehaviour
         if (other.gameObject.CompareTag("Ground"))
         {
             // animator.SetBool("IsGround",false);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Monster"))
+        {
+            Debug.Log($"Attack Damage : {attackDamage}");
+            other.GetComponent<Rigidbody2D>().AddForceY(5f, ForceMode2D.Impulse);
         }
     }
 }
