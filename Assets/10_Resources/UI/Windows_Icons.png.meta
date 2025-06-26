@@ -1,7 +1,28 @@
 fileFormatVersion: 2
-guid: f6e94fce8dee5d74dab90f26b7553751
+guid: 28711b3c5809f9849992b7b1da8c6115
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -5421709028232957321
+    second: Windows_Icons_0
+  - first:
+      213: -265213787064888513
+    second: Windows_Icons_1
+  - first:
+      213: -357089265500988452
+    second: Windows_Icons_2
+  - first:
+      213: 2784325872354485142
+    second: Windows_Icons_3
+  - first:
+      213: -8692709947429568350
+    second: Windows_Icons_4
+  - first:
+      213: -3513562678931714041
+    second: Windows_Icons_5
+  - first:
+      213: -1517310344781111415
+    second: Windows_Icons_6
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -39,7 +60,7 @@ TextureImporter:
     mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: 0
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -48,7 +69,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 20
+  spritePixelsToUnits: 48
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -63,16 +84,16 @@ TextureImporter:
   compressionQualitySet: 0
   textureFormatSet: 0
   ignorePngGamma: 0
-  applyGammaDecoding: 0
+  applyGammaDecoding: 1
   swizzle: 50462976
-  cookieLightType: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -85,7 +106,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -98,7 +119,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -111,7 +132,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -123,13 +144,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: food_merchant_spritesheet_0
+      name: Windows_Icons_0
       rect:
         serializedVersion: 2
-        x: 7
-        y: 61
+        x: 0
+        y: 134
         width: 16
-        height: 27
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,20 +159,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f920e684e1ee08a49a7e500951515d7f
-      internalID: -99324395
+      spriteID: 77275a04d5832c4b0800000000000000
+      internalID: -5421709028232957321
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: food_merchant_spritesheet_1
+      name: Windows_Icons_1
       rect:
         serializedVersion: 2
-        x: 37
-        y: 61
+        x: 16
+        y: 134
         width: 16
-        height: 26
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -160,20 +181,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2654d74792b7207438e3705ddbde97d4
-      internalID: 1712269977
+      spriteID: f3316704775c15cf0800000000000000
+      internalID: -265213787064888513
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: food_merchant_spritesheet_2
+      name: Windows_Icons_2
       rect:
         serializedVersion: 2
-        x: 67
-        y: 61
+        x: 32
+        y: 134
         width: 16
-        height: 27
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,20 +203,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5787b9c366188b44c818e13c9ab867d8
-      internalID: 1152985554
+      spriteID: cdb55b8743d5b0bf0800000000000000
+      internalID: -357089265500988452
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: food_merchant_spritesheet_3
+      name: Windows_Icons_3
       rect:
         serializedVersion: 2
-        x: 97
-        y: 61
+        x: 48
+        y: 134
         width: 16
-        height: 26
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -204,20 +225,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2544834843be72642a411021e449064f
-      internalID: -457468518
+      spriteID: 6936e9001a9e3a620800000000000000
+      internalID: 2784325872354485142
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: food_merchant_spritesheet_4
+      name: Windows_Icons_4
       rect:
         serializedVersion: 2
-        x: 7
-        y: 31
+        x: 64
+        y: 134
         width: 16
-        height: 26
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -226,20 +247,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 615fa074b9225d846991e7c35cb6b2f5
-      internalID: -1616077650
+      spriteID: 2a0c4f7db5a4d5780800000000000000
+      internalID: -8692709947429568350
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: food_merchant_spritesheet_5
+      name: Windows_Icons_5
       rect:
         serializedVersion: 2
-        x: 37
-        y: 31
+        x: 80
+        y: 134
         width: 16
-        height: 25
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -248,20 +269,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d4c7a4c6d60619f4d89ab8a837bd3a03
-      internalID: -1785206378
+      spriteID: 7009432fb515d3fc0800000000000000
+      internalID: -3513562678931714041
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: food_merchant_spritesheet_6
+      name: Windows_Icons_6
       rect:
         serializedVersion: 2
-        x: 67
-        y: 31
+        x: 96
+        y: 134
         width: 16
-        height: 26
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -270,118 +291,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 55f11f61930ed034b8bd55643d267547
-      internalID: 1858563892
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: food_merchant_spritesheet_7
-      rect:
-        serializedVersion: 2
-        x: 97
-        y: 31
-        width: 16
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4e439d7808e856447af7b0dd3aca1d89
-      internalID: 1459008868
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: food_merchant_spritesheet_8
-      rect:
-        serializedVersion: 2
-        x: 7
-        y: 1
-        width: 16
-        height: 26
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 75d729e149222584fbf4984037f17da3
-      internalID: -786169681
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: food_merchant_spritesheet_9
-      rect:
-        serializedVersion: 2
-        x: 37
-        y: 1
-        width: 16
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3024ce7d8f9803e4da52ddd7610ae67f
-      internalID: 295274736
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: food_merchant_spritesheet_10
-      rect:
-        serializedVersion: 2
-        x: 67
-        y: 1
-        width: 16
-        height: 26
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ffafe4e0b6ace314bb0f532d381217f1
-      internalID: -945116508
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: food_merchant_spritesheet_11
-      rect:
-        serializedVersion: 2
-        x: 97
-        y: 1
-        width: 16
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f5c23bdf3f3ae554a974e1d37c4eb38b
-      internalID: 123786165
+      spriteID: 98fdb4dc74e61fae0800000000000000
+      internalID: -1517310344781111415
       vertices: []
       indices: 
       edges: []
@@ -390,7 +301,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 954e2298d69bb374e90082537b612702
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -400,18 +311,13 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      food_merchant_spritesheet_0: -99324395
-      food_merchant_spritesheet_1: 1712269977
-      food_merchant_spritesheet_10: -945116508
-      food_merchant_spritesheet_11: 123786165
-      food_merchant_spritesheet_2: 1152985554
-      food_merchant_spritesheet_3: -457468518
-      food_merchant_spritesheet_4: -1616077650
-      food_merchant_spritesheet_5: -1785206378
-      food_merchant_spritesheet_6: 1858563892
-      food_merchant_spritesheet_7: 1459008868
-      food_merchant_spritesheet_8: -786169681
-      food_merchant_spritesheet_9: 295274736
+      Windows_Icons_0: -5421709028232957321
+      Windows_Icons_1: -265213787064888513
+      Windows_Icons_2: -357089265500988452
+      Windows_Icons_3: 2784325872354485142
+      Windows_Icons_4: -8692709947429568350
+      Windows_Icons_5: -3513562678931714041
+      Windows_Icons_6: -1517310344781111415
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
