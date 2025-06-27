@@ -10,6 +10,7 @@ public class InteractionEvent : MonoBehaviour
         DOOR,
         NPC,
     }
+    public SoundManager soundManager;
     public InteractionType type;
     public GameObject PopUp;
     public Animator animator;
@@ -57,10 +58,10 @@ public class InteractionEvent : MonoBehaviour
 
     IEnumerator DoorRoutin(Transform player)
     {
-        // 코루틴 끝날때까지 대기
+        soundManager.EventSoundPlay("Door");
         yield return StartCoroutine(fadeRoutine.Fade(1f,Color.black, true));
         
-        if (player.transform.position.y < (inPos.y + outPos.y) / 2)
+        if (!House.activeSelf)
         {
             player.transform.position = inPos;
             MapRoot.SetActive(false);
