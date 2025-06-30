@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc2acaac6c5d45c9b52f770dfd9e6bfb, type: 3}
+  m_Name: autoTile_1
+  m_EditorClassIdentifier: 
+  width: 400
+  height: 400
+  maskType: 1
+  sprites:
+  - x: 32
+    y: 320
+    mask: 184
+  - x: 48
+    y: 336
+    mask: 186
+  - x: 32
+    y: 368
+    mask: 186
+  - x: 16
+    y: 384
+    mask: 58
+  - x: 32
+    y: 336
+    mask: 186
+  - x: 0
+    y: 352
+    mask: 178
+  - x: 0
+    y: 320
+    mask: 176
+  - x: 16
+    y: 368
+    mask: 186
+  - x: 0
+    y: 384
+    mask: 50
+  - x: 32
+    y: 384
+    mask: 58
+  - x: 48
+    y: 384
+    mask: 58
+  - x: 64
+    y: 384
+    mask: 26
+  - x: 0
+    y: 368
+    mask: 178
+  - x: 48
+    y: 368
+    mask: 186
+  - x: 64
+    y: 368
+    mask: 154
+  - x: 16
+    y: 352
+    mask: 186
+  - x: 32
+    y: 352
+    mask: 186
+  - x: 48
+    y: 352
+    mask: 186
+  - x: 64
+    y: 352
+    mask: 154
+  - x: 0
+    y: 336
+    mask: 178
+  - x: 16
+    y: 336
+    mask: 186
+  - x: 64
+    y: 336
+    mask: 154
+  - x: 16
+    y: 320
+    mask: 184
+  - x: 48
+    y: 320
+    mask: 184
+  - x: 64
+    y: 320
+    mask: 152

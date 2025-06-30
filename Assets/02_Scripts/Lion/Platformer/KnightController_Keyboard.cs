@@ -3,9 +3,12 @@ using UnityEngine;
 
 public class KnightController_Keyboard : MonoBehaviour
 {
+    // 0 0.5
+    // 0.8 1
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
+    private CapsuleCollider2D col;
     
     [SerializeField] private JoystickController joystickController;
     [SerializeField] private InputType inputType;
@@ -17,7 +20,14 @@ public class KnightController_Keyboard : MonoBehaviour
     [SerializeField] private float groundCheckDistance;
     [SerializeField] private float attackDamage; 
     
+    [Header("Collider Size")]
+    [SerializeField] private Vector2 idleSize;
+    [SerializeField] private Vector2 idleOffset;
+    [SerializeField] private Vector2 crouchSize;
+    [SerializeField] private Vector2 crouchOffset;
+    
     private bool isGrounded;
+    private bool isLadder;
     [SerializeField] private bool isAttacking;
     [SerializeField] private bool isCombo;
     
@@ -27,6 +37,7 @@ public class KnightController_Keyboard : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<CapsuleCollider2D>();
     }
 
     void Start()
@@ -81,7 +92,6 @@ public class KnightController_Keyboard : MonoBehaviour
         {
             transform.localScale = new Vector3(-1, 1, 1);
         }
-
         if (horizontal > 0)
         {
             transform.localScale = new Vector3(1, 1, 1);
@@ -94,7 +104,8 @@ public class KnightController_Keyboard : MonoBehaviour
         {
             inputDirection = Vector3.zero;
         }
-        
+
+        ChangeColliderSize();
         
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -103,6 +114,20 @@ public class KnightController_Keyboard : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X))
         {
             Attack();
+        }
+    }
+
+    void ChangeColliderSize()
+    {
+        if (inputDirection.y < 0)
+        {
+            col.size = crouchSize;
+            col.offset = crouchOffset;
+        }
+        else
+        {
+            col.size = idleSize;
+            col.offset = idleOffset;
         }
     }
 
@@ -129,7 +154,11 @@ public class KnightController_Keyboard : MonoBehaviour
     }
     void Move()
     {
-        rb.linearVelocityX = inputDirection.x * movementSpeed;
+        if (inputDirection.x != 0) rb.linearVelocityX = inputDirection.x * movementSpeed;
+        if (isLadder && inputDirection.y != 0)
+        {
+            rb.linearVelocityY = inputDirection.y * movementSpeed;
+        }
     }
 
     void Jump()
@@ -194,6 +223,22 @@ public class KnightController_Keyboard : MonoBehaviour
         {
             Debug.Log($"Attack Damage : {attackDamage}");
             other.GetComponent<Rigidbody2D>().AddForceY(5f, ForceMode2D.Impulse);
+        }
+        if (other.gameObject.CompareTag("Ladder"))
+        {
+            isLadder = true;
+            rb.gravityScale = 0;
+            rb.linearVelocity = Vector2.zero;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Ladder"))
+        {
+            isLadder = false;
+            rb.gravityScale = 2f;
+            rb.linearVelocity = Vector2.zero;
         }
     }
 }

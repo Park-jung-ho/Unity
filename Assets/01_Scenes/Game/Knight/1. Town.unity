@@ -71246,7 +71246,7 @@ MonoBehaviour:
   fade: {fileID: 335189031}
   loadingText: {fileID: 1152427482}
   progressBar: {fileID: 1579782283}
-  loadingDuration: 5
+  loadingDuration: 10
 --- !u!61 &1943850867
 BoxCollider2D:
   m_ObjectHideFlags: 0
