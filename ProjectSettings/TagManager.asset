@@ -17,6 +17,7 @@ TagManager:
   - TrackingObject
   - Actors
   - Ladder
+  - Return
   layers:
   - Default
   - TransparentFX

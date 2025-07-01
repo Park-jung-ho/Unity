@@ -19,6 +19,7 @@ public class KnightController_Keyboard : MonoBehaviour
     [SerializeField] private int jumpCount;
     [SerializeField] private float groundCheckDistance;
     [SerializeField] private float attackDamage; 
+    [SerializeField] private float KnockbackPower; 
     
     [Header("Collider Size")]
     [SerializeField] private Vector2 idleSize;
@@ -222,7 +223,10 @@ public class KnightController_Keyboard : MonoBehaviour
         if (other.gameObject.CompareTag("Monster"))
         {
             Debug.Log($"Attack Damage : {attackDamage}");
-            other.GetComponent<Rigidbody2D>().AddForceY(5f, ForceMode2D.Impulse);
+            other.GetComponent<IHit>().OnHit();
+            var forceDir = (other.transform.position - transform.position).normalized;
+            forceDir += Vector3.up/2;
+            other.GetComponent<Rigidbody2D>().AddForce(forceDir * KnockbackPower, ForceMode2D.Impulse);
         }
         if (other.gameObject.CompareTag("Ladder"))
         {

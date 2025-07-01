@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
@@ -6,6 +7,11 @@ public class SoundManager : MonoBehaviour
     public AudioSource EventAudioSource;
     public AudioClip[] BGMClips;
     public AudioClip[] clips;
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(this);
+    }
 
     private void Start()
     {
