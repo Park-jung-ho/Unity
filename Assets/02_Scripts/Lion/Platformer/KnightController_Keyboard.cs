@@ -1,7 +1,9 @@
 using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class KnightController_Keyboard : MonoBehaviour
+public class KnightController_Keyboard : MonoBehaviour, IDamageable
 {
     // 0 0.5
     // 0.8 1
@@ -17,9 +19,22 @@ public class KnightController_Keyboard : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private int maxJumpCount;
     [SerializeField] private int jumpCount;
-    [SerializeField] private float groundCheckDistance;
+    [SerializeField] private float hp; 
+    [SerializeField] private float currHp; 
     [SerializeField] private float attackDamage; 
-    [SerializeField] private float KnockbackPower; 
+    [SerializeField] private float KnockbackPower;
+    
+    [Header("UI")]
+    [SerializeField] private Image hpBar;
+    [SerializeField] private TMP_Text hpText;
+    
+    
+    [Header("Ground Check")]
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private Vector3 groundCheckOffset;
+    [SerializeField] private Vector2 checkBoxSize;
+    [SerializeField] private float groundCheckDistance;
+    
     
     [Header("Collider Size")]
     [SerializeField] private Vector2 idleSize;
@@ -27,8 +42,9 @@ public class KnightController_Keyboard : MonoBehaviour
     [SerializeField] private Vector2 crouchSize;
     [SerializeField] private Vector2 crouchOffset;
     
-    private bool isGrounded;
+    
     private bool isLadder;
+    [SerializeField]private bool isGrounded;
     [SerializeField] private bool isAttacking;
     [SerializeField] private bool isCombo;
     
@@ -39,6 +55,8 @@ public class KnightController_Keyboard : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<CapsuleCollider2D>();
+        currHp = hp;
+        hpText.text = $"{currHp:F0}/{hp}";
     }
 
     void Start()
@@ -141,17 +159,20 @@ public class KnightController_Keyboard : MonoBehaviour
     }
     void IsGrounded()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.down, groundCheckDistance);
-        // Debug.DrawRay(transform.position, Vector3.down * groundCheckDistance, Color.red);
-        if (hit.collider != null && hit.collider.CompareTag("Ground"))
+        var hit = Physics2D.OverlapBox(transform.position - groundCheckOffset, checkBoxSize,0, groundLayer);
+        if (hit != null)
         {
-            // if (!isGrounded) Debug.Log($"[Ray] IsGround: {Time.time}");
             isGrounded = true;
+            jumpCount = maxJumpCount;
         }
         else
         {
             isGrounded = false;
         }
+    }
+    void OnDrawGizmos() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position - groundCheckOffset, checkBoxSize);
     }
     void Move()
     {
@@ -206,7 +227,7 @@ public class KnightController_Keyboard : MonoBehaviour
         {
             // animator.SetBool("IsGround",true);
             // Debug.Log($"[Collision] IsGround: {Time.time}");
-            jumpCount = maxJumpCount;
+            // jumpCount = maxJumpCount;
         }
     }
 
@@ -223,7 +244,7 @@ public class KnightController_Keyboard : MonoBehaviour
         if (other.gameObject.CompareTag("Monster"))
         {
             Debug.Log($"Attack Damage : {attackDamage}");
-            other.GetComponent<IHit>().OnHit();
+            other.GetComponent<IDamageable>()?.TakeDamage(attackDamage);
             var forceDir = (other.transform.position - transform.position).normalized;
             forceDir += Vector3.up/2;
             other.GetComponent<Rigidbody2D>().AddForce(forceDir * KnockbackPower, ForceMode2D.Impulse);
@@ -244,6 +265,26 @@ public class KnightController_Keyboard : MonoBehaviour
             rb.gravityScale = 2f;
             rb.linearVelocity = Vector2.zero;
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        animator.SetTrigger("Hit");
+        currHp -= damage;
+        hpBar.fillAmount = currHp / hp;
+        hpText.text = $"{currHp:F0}/{hp}";
+        
+        if (currHp <= 0)
+        {
+            Death();
+        }
+    }
+
+    public void Death()
+    {
+        animator.SetTrigger("Death");
+        col.enabled = false;
+        rb.gravityScale = 0;
     }
 }
 

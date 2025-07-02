@@ -1,7 +1,10 @@
 using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
-public abstract class MonsterCore : MonoBehaviour
+public abstract class MonsterCore : MonoBehaviour, IDamageable
 {
     public enum MonsterState 
     {
@@ -10,11 +13,20 @@ public abstract class MonsterCore : MonoBehaviour
         TRACE,
         ATTACK,
         HIT,
+        DEATH,
     }
+    
+    public ItemManager itemManager;
+    
     public MonsterState state;
     public Animator animator;
     public float hp;
+    public float currHp;
     public float speed;
+    public float damage;
+    
+    [Header("UI")]
+    public Image hpBar;
     
     public Transform target;
     public float traceDistance;
@@ -26,8 +38,10 @@ public abstract class MonsterCore : MonoBehaviour
     protected virtual void Init(float hp, float speed)
     {
         this.hp = hp;
+        currHp = hp;
         this.speed = speed;
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        itemManager = FindFirstObjectByType<ItemManager>();
     }
 
     void Update()
@@ -74,7 +88,33 @@ public abstract class MonsterCore : MonoBehaviour
         state = newState;
         EnterState(state);
     }
+    public void TakeDamage(float damage)
+    {
+        currHp -= damage;
+        hpBar.fillAmount = currHp / hp;
+        
+        if (currHp <= 0)
+        {
+            Death();
+        }
+        else
+        {
+            ChangeState(MonsterState.HIT);
+        }
+    }
 
+    public void Death()
+    {
+        ChangeState(MonsterState.DEATH);
+        animator.SetTrigger("Death");
+        int ranVal = Random.Range(1, 5);
+        for (int i = 0; i < ranVal; i++)
+        {
+            itemManager.DropItem(transform.position);
+        }
+        // col.enabled = false;
+        // rb.gravityScale = 0;
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Return"))
@@ -82,5 +122,13 @@ public abstract class MonsterCore : MonoBehaviour
             moveDir *= -1;
             transform.localScale = new Vector3(-moveDir, 1, 1);
         }
+
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log($"[{name}] Attack {damage}damage => {other.name}");
+            other.GetComponent<IDamageable>()?.TakeDamage(damage);
+        }
     }
+
+    
 }

@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Base-01_0
+      name: background_0
       rect:
         serializedVersion: 2
         x: 0
@@ -1553,7 +1553,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Base-01_65
+      name: block_0
       rect:
         serializedVersion: 2
         x: 323
@@ -1562,7 +1562,7 @@ TextureImporter:
         height: 26
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 5, y: 5, z: 5, w: 5}
       customData: 
       outline: []
       physicsShape: []
@@ -1918,7 +1918,6 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Base-01_0: -1915693247
       Base-01_1: 2123738353
       Base-01_10: -1633153336
       Base-01_11: -977105327
@@ -1980,7 +1979,6 @@ TextureImporter:
       Base-01_62: 2087357911
       Base-01_63: -34362741
       Base-01_64: -1673220570
-      Base-01_65: 891178674
       Base-01_66: -865496753
       Base-01_67: 401047619
       Base-01_68: -151857651
@@ -1999,6 +1997,8 @@ TextureImporter:
       Base-01_8: -110285788
       Base-01_80: -640212972
       Base-01_9: 540185018
+      background_0: -1915693247
+      block_0: 891178674
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
