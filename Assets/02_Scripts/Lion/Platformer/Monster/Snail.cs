@@ -39,7 +39,8 @@ public class Snail : MonsterCore
                 StartCoroutine(HitRoutine());
                 break;
             case MonsterState.DEATH:
-                
+                StopAllCoroutines();
+                hpBar.transform.parent.parent.gameObject.SetActive(false);
                 break;
         }
         

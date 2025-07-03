@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 
 public class PortalController : MonoBehaviour
 {
+    public int SceneIndex;
     public GameObject effect;
     public GameObject loadingImage;
     public FadeRoutine fade;
@@ -42,6 +43,6 @@ public class PortalController : MonoBehaviour
         }
         loadingText.text = "100%";
         progressBar.fillAmount = 1;
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(SceneIndex);
     }
 }

@@ -18,6 +18,7 @@ public class HpPotion : MonoBehaviour, IItemObject
     public void Get()
     {
         gameObject.SetActive(false);
+        inventory.GetItem(this);
     }
 
     public void Use()

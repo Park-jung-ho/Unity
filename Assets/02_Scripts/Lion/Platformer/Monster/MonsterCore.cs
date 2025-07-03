@@ -83,7 +83,7 @@ public abstract class MonsterCore : MonoBehaviour, IDamageable
     public void ChangeState(MonsterState newState)
     {
         if (state == newState) return;
-        Debug.Log($"[{name}] {state} => {newState}");
+        // Debug.Log($"[{name}] {state} => {newState}");
         ExitState(state);
         state = newState;
         EnterState(state);
@@ -107,6 +107,9 @@ public abstract class MonsterCore : MonoBehaviour, IDamageable
     {
         ChangeState(MonsterState.DEATH);
         animator.SetTrigger("Death");
+        GetComponent<Collider2D>().enabled = false;
+        GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+        GetComponent<Rigidbody2D>().gravityScale = 0;
         int ranVal = Random.Range(1, 5);
         for (int i = 0; i < ranVal; i++)
         {

@@ -5,13 +5,12 @@ using UnityEngine.UI;
 
 public class KnightController_Keyboard : MonoBehaviour, IDamageable
 {
-    // 0 0.5
-    // 0.8 1
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
     private CapsuleCollider2D col;
     
+    [Header("Movement")]
     [SerializeField] private JoystickController joystickController;
     [SerializeField] private InputType inputType;
     [SerializeField] private Vector3 inputDirection;
@@ -47,6 +46,7 @@ public class KnightController_Keyboard : MonoBehaviour, IDamageable
     [SerializeField]private bool isGrounded;
     [SerializeField] private bool isAttacking;
     [SerializeField] private bool isCombo;
+    [SerializeField] private bool isDash;
     
     
     void Awake()
@@ -134,6 +134,10 @@ public class KnightController_Keyboard : MonoBehaviour, IDamageable
         {
             Attack();
         }
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            Dash();
+        }
     }
 
     void ChangeColliderSize()
@@ -154,7 +158,6 @@ public class KnightController_Keyboard : MonoBehaviour, IDamageable
     {
         animator.SetFloat("JoystickX", inputDirection.x);
         animator.SetFloat("JoystickY", inputDirection.y);
-        // animator.SetBool("Run", inputDirection.x != 0);
         animator.SetBool("IsGround",isGrounded);
     }
     void IsGrounded()
@@ -162,8 +165,8 @@ public class KnightController_Keyboard : MonoBehaviour, IDamageable
         var hit = Physics2D.OverlapBox(transform.position - groundCheckOffset, checkBoxSize,0, groundLayer);
         if (hit != null)
         {
+            if (!isGrounded) jumpCount = maxJumpCount;
             isGrounded = true;
-            jumpCount = maxJumpCount;
         }
         else
         {
@@ -176,6 +179,7 @@ public class KnightController_Keyboard : MonoBehaviour, IDamageable
     }
     void Move()
     {
+        if (isAttacking || isDash) return;
         if (inputDirection.x != 0) rb.linearVelocityX = inputDirection.x * movementSpeed;
         if (isLadder && inputDirection.y != 0)
         {
@@ -190,6 +194,21 @@ public class KnightController_Keyboard : MonoBehaviour, IDamageable
         rb.linearVelocityY = 0;
         rb.AddForceY(jumpForce, ForceMode2D.Impulse);
         animator.SetTrigger("Jump");
+
+        if (isAttacking) EndCombo();
+    }
+
+    void Dash()
+    {
+        if (isDash) return;
+        isDash = true;
+        rb.AddForceX(jumpForce * transform.localScale.x, ForceMode2D.Impulse);
+        Invoke(nameof(EndDash),1f);
+    }
+
+    void EndDash()
+    {
+        isDash = false;
     }
 
     void Attack()
@@ -243,11 +262,10 @@ public class KnightController_Keyboard : MonoBehaviour, IDamageable
     {
         if (other.gameObject.CompareTag("Monster"))
         {
-            Debug.Log($"Attack Damage : {attackDamage}");
-            other.GetComponent<IDamageable>()?.TakeDamage(attackDamage);
             var forceDir = (other.transform.position - transform.position).normalized;
             forceDir += Vector3.up/2;
             other.GetComponent<Rigidbody2D>().AddForce(forceDir * KnockbackPower, ForceMode2D.Impulse);
+            other.GetComponent<IDamageable>()?.TakeDamage(attackDamage);
         }
         if (other.gameObject.CompareTag("Ladder"))
         {
@@ -269,6 +287,7 @@ public class KnightController_Keyboard : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
+        if (isAttacking) EndCombo();
         animator.SetTrigger("Hit");
         currHp -= damage;
         hpBar.fillAmount = currHp / hp;

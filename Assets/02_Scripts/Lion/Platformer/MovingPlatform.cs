@@ -17,9 +17,14 @@ public class MovingPlatform : MonoBehaviour
 
     void Update()
     {
+    }
+
+    private void FixedUpdate()
+    {
         theta += speed * Time.deltaTime;
         if (moveType == MoveType.Horizontal) transform.position = new Vector3(initPos.x + power * Mathf.Sin(theta),initPos.y,initPos.z);
         if (moveType == MoveType.Vertical) transform.position = new Vector3(initPos.x, initPos.y + power * Mathf.Sin(theta), initPos.z);
+        
     }
 
     private void OnCollisionEnter2D(Collision2D other)
